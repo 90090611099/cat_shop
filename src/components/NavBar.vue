@@ -14,7 +14,5 @@ export default {
 
 <style lang="scss" scoped>
 #navbar { width:100%; height: 30px; background-color:deeppink;
-a {
-    vertical-align: center
-}}
+}
 </style>
