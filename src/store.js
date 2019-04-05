@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    cart: [],
+    cart: [ ],
     products: [
       {
         name: "Crewneck T-Shirt",
@@ -22,13 +22,10 @@ export default new Vuex.Store({
           material: "cotton",
           fit: "regular",
           maintenance: "machine wash",
-          additional: "Some colors feature different-colored yarns for a heathered effect."
+          additional:
+            "Some colors feature different-colored yarns for a heathered effect."
         },
-        images: [
-          '1',
-          '2',
-          '3',
-        ]
+        images: ["1", "2", "3"]
       },
       {
         name: "Cardigan Sweater",
@@ -48,11 +45,11 @@ export default new Vuex.Store({
           additional: ""
         },
         images: [
-          '2',
-          '53363-2.jpg',
-          '53363-3.jpg',
-          '53363-4.jpg',
-          '53363-5.jpg',
+          "2",
+          "53363-2.jpg",
+          "53363-3.jpg",
+          "53363-4.jpg",
+          "53363-5.jpg"
         ]
       },
       {
@@ -63,7 +60,7 @@ export default new Vuex.Store({
         color: "navy",
         size: {
           waist: 32,
-          length: 32,
+          length: 32
         },
         gender: "men",
         quantity: 5,
@@ -76,11 +73,11 @@ export default new Vuex.Store({
           additional: ""
         },
         images: [
-          '3',
-          '53364-2.jpg',
-          '53364-3.jpg',
-          '53364-4.jpg',
-          '53364-5.jpg',
+          "3",
+          "53364-2.jpg",
+          "53364-3.jpg",
+          "53364-4.jpg",
+          "53364-5.jpg"
         ]
       },
       {
@@ -98,21 +95,49 @@ export default new Vuex.Store({
           material: "nylon",
           fit: "Fitted through the chest and waist, flare skirt.",
           maintenance: "machine wash cold with like colors, air dry",
-          additional: "Wrap waist with internal button closure for an extra secure fit."
+          additional:
+            "Wrap waist with internal button closure for an extra secure fit."
         },
-        images: [
-          '4',
-          '53365-2.jpg',
-          '53365-3.jpg',
-        ]
+        images: ["4", "53365-2.jpg", "53365-3.jpg"]
       }
     ]
   },
-  mutations: {},
+  mutations: {
+    addToCart(state, payload) {
+      state.cart.push(Number(payload));
+    },
+    incrementProductInventory(state, payload) {
+      let product = state.products.find(
+        product => product.id === Number(payload)
+      );
+      product.quantity++;
+    },
+    decrementProductInventory(state, payload) {
+      let product = state.products.find(
+        product => product.id === Number(payload)
+      );
+      product.quantity--;
+    },
+    removeFromCart(state, payload) {
+      let indexToDelete = state.cart.indexOf(Number(payload));
+      state.cart.splice(indexToDelete, 1);
+    }
+  },
   actions: {},
   getters: {
-    products(){
-      return this.products
+    products: state => {
+      return state.products;
+    },
+    product: state => id => {
+      return state.products.filter(p => p.id === Number(id))[0];
+    },
+    cartItems: state => {
+      return state.cart.map(ItemId =>
+        state.products.find(product => product.id === ItemId)
+      );
+    },
+    cartItemsLength: state => {
+      return state.cart.length
     }
   }
 });
