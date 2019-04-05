@@ -1,8 +1,8 @@
 <template>
-<div :style="{display:block}">
+<div :style="{ display: display}">
     <div class="modal">
+        <button @click="close" style="margin-left:96%">X</button>
         <h1>Choose payment method</h1>
-        <button @click="close">X</button>
         <ul>
             <li>paypal</li>
             <li>payYou</li>
@@ -16,12 +16,15 @@
 <script>
 export default {
     name: 'modal',
+    data() {
+        
+
+        },
     methods:{
         close(){
-            
+              return { display: 'none'        
         }
-
-    }
+    }}
 }
 </script>
 
